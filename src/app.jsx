@@ -1,31 +1,25 @@
 import React, { useState } from "react";
-import Users from "./components/users";
+import api from "./API";
 import SearchStatus from "./components/serachStatus";
-import API from "./API";
-
+import Users from "./components/users";
 const App = () => {
-  const [users, setUsers] = useState(API.users.fetchAll());
+  const [users, setUsers] = useState(api.users.fetchAll());
+  const [status, setStatus] = useState(false);
 
   const handleDelete = (userId) =>
     setUsers(users.filter((user) => user._id !== userId));
-
+  const handleChangeStatus = () => {
+    setStatus(true);
+  };
   return (
     <>
       <SearchStatus length={users.length} />
-      {users.length > 0 && (
-        <table className="table ">
-          <thead>
-            <tr>
-              <th scope="col">Имя</th>
-              <th scope="col">Качества</th>
-              <th scope="col">Профессия</th>
-              <th scope="col">Встретился, раз</th>
-              <th scope="col">Оценка</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-        </table>
-      )}
+      <Users
+        users={users}
+        onDelete={handleDelete}
+        status={status}
+        handleChangeStatus={handleChangeStatus}
+      />
     </>
   );
 };
