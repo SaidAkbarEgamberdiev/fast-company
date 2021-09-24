@@ -42,14 +42,14 @@ const User = ({
     );
 };
 User.propTypes = {
-    _id: PropTypes.number.isRequired,
+    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     qualities: PropTypes.array.isRequired,
-    profession: PropTypes.string.isRequired,
+    profession: PropTypes.object.isRequired,
     completedMeetings: PropTypes.number.isRequired,
     rate: PropTypes.number.isRequired,
     onDelete: PropTypes.func.isRequired,
-    bookmark: PropTypes.number.isRequired,
+    bookmark: PropTypes.bool,
     onToggleBookMark: PropTypes.func.isRequired
 };
 export default User;
