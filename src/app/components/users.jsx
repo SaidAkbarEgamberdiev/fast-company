@@ -4,18 +4,19 @@ import { paginate } from "../utils/paginate";
 import Pagination from "./pagination";
 import PropTypes from "prop-types";
 import GroupList from "./groupList";
-import api from "../API";
+import api from "../api";
 import SearchStatus from "./serachStatus";
 
 const Users = ({ users: allUsers, ...rest }) => {
-    const pageSize = 2;
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setselectedProf] = useState();
 
+    const pageSize = 2;
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfessions(data));
     }, []);
+
     useEffect(() => {
         setCurrentPage(1);
     }, [selectedProf]);
@@ -28,7 +29,11 @@ const Users = ({ users: allUsers, ...rest }) => {
         setCurrentPage(pageIndex);
     };
     const filteredUsers = selectedProf
-        ? allUsers.filter((user) => user.profession === selectedProf)
+        ? allUsers.filter(
+              (user) =>
+                  JSON.stringify(user.profession) ===
+                  JSON.stringify(selectedProf)
+          )
         : allUsers;
 
     const count = filteredUsers.length;
@@ -49,6 +54,7 @@ const Users = ({ users: allUsers, ...rest }) => {
                         className="btn btn-secondary mt-2"
                         onClick={clearFilter}
                     >
+                        {" "}
                         Очистить
                     </button>
                 </div>
